@@ -33,19 +33,19 @@ defaults
     errorfile 503 /etc/haproxy/errors/503.http
     errorfile 504 /etc/haproxy/errors/504.http
 
-frontend bihibindi-frontend
+frontend samuelkwizera-frontend
     bind *:80
     mode http
     http-request redirect scheme https code 301 unless { ssl_fc }
     http-request set-header X_Forwarded-Proto http
     default_backend samuelkwizera-backend
 
-frontend bihibindi-frontend-https
+frontend samuelkwizera-frontend-https
     bind *:443 ssl crt /etc/haproxy/certs/www.samuelkwizera.tech.pem
     http-request set-header X-Forwarded-Proto https
     default_backend samuelkwizera-backend
 
 backend samuelkwizera-backend
     balance roundrobin
-    server 6433-web-01 35.171.153.111  check
-    server 6433-web-02 54.208.109.110  check
+    server 6433-web-01 35.171.153.111:80  check
+    server 6433-web-02 54.208.109.110:80  check
